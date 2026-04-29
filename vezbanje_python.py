@@ -61,8 +61,19 @@ for i in range(2,20):                # petlja koja iterira od broja 2 do 19
 
 #%% -------------------------------------- ZADATAK
 # Napisati funkciju koja prima niz stringova (reci), a vraca recnik koji kao vrednosti ima duzine reci sa ulaza. I koji preskace prazne reci
+def vrati_recnik(reci):
+    recnik = {}
+    for rec in reci:
+        if rec == '':
+            continue
+        recnik[rec] = len(rec)
+    return recnik
 
+def vrati_recnik_1(reci):
+    return {rec: len(rec) for rec in reci if rec}
 
+print(vrati_recnik(['t', 'test', '', 'test123']))
+print(vrati_recnik_1(['t', 'test', '', 'test123']))
 #%% NUMPY - biblioteka za matrice
 import numpy as np                   # uvozenje bibliteke za rad sa matricama
 
@@ -126,9 +137,34 @@ data = pd.read_csv('drug.csv')       # funkcija za ucitavanje podataka iz .csv f
 
 #%% -------------------------------------- ZADATAK
 # Iz podataka DRUG.CSV pronaci pacijenta koji ima najvecu kombinaciju natrijuma i kalijuma u odnosu (0.6 i 0.4)
+
 # Koraci:
-    # ucitaj podatke o lekovima
-    # uzmi samo numericke atribute (rucno i funkcijom isinstance)
-    # izracunaj otezanu sumu [0.4 0.6]
-    # izaberi indeks elementa sa najvecom sumom
-    # prikazi pacijenta sa tim indeksom
+# ucitaj podatke o lekovima
+import pandas as pd
+
+data = pd.read_csv('data/drug.csv')
+
+# uzmi samo numericke atribute (rucno i funkcijom isinstance)
+numeric_att = []
+for att in data.columns:
+    if isinstance(data[att].iloc[0], (int, float)):
+        numeric_att.append(att)
+data_numeric = data[numeric_att]
+
+# izracunaj otezanu sumu [0.4 0.6] 
+score = 0.6 * data_numeric['Na'] + 0.4 * data_numeric['K']
+
+# izaberi indeks elementa sa najvecom sumom
+idx = score.idxmax()
+
+# prikazi pacijenta sa tim indeksom
+print(data.loc[idx])
+
+
+#----------------------------------------------------
+import pandas as pd
+
+data = pd.read_csv('data/drug.csv')
+
+score = 0.6 * data['Na'] + 0.4 * data['K']
+print(data.loc[score.idxmax()])
