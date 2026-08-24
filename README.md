@@ -14,6 +14,7 @@ The goal of the course project is to study and upgrade four core machine learnin
 **Project Structure**
 - **Files**:
   - [naive_bayes.py](naive_bayes.py): Naive Bayes implementation (initial).
+  - [linear_regression.py](linear_regression.py): Linear Regression implementation (initial).
   - [requirements.txt](requirements.txt): Python dependencies.
 - **Data**:
   - See the `data/` folder for used CSV datasets.
@@ -33,6 +34,7 @@ pip install -r requirements.txt
   - Run a script directly (each script contains examples or simple runners):
 ```bash
 python naive_bayes.py
+python linear_regression.py
 ```
 
   - Adjust or extend scripts to run experiments with different datasets or parameters.
