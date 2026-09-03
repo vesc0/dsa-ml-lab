@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 #%% UCENJE
-def learn(X, y, lam=0, stochastic=False, auto_alpha=True, alpha=None):
+def learn(X, y, lam=0, stochastic=False, auto_alpha=False, alpha=None):
     model = {}
     X = X.copy()
     X_mean = X.mean()
@@ -21,7 +21,7 @@ def learn(X, y, lam=0, stochastic=False, auto_alpha=True, alpha=None):
     # INIT
     w = np.random.random((1,n))
     if alpha is None:
-        alpha = 0.05 if stochastic else 0.06
+        alpha = 0.05
     prev_cost = np.inf
     w_prev = w.copy()
     alpha0 = alpha
@@ -51,12 +51,13 @@ def learn(X, y, lam=0, stochastic=False, auto_alpha=True, alpha=None):
                 prev_cost = np.inf # sledeci korak neka prodje
                 alpha *= 0.5
                 continue
-            if auto_alpha and stochastic:
-                alpha = alpha0 / (1 + it * 0.001)
             else:
                 alpha *= 1.05
                 prev_cost = c
                 w_prev = w.copy()
+        
+        if auto_alpha and stochastic:
+            alpha = alpha0 / (1 + it * 0.001)
         
         w = w - alpha*grad
         
@@ -93,7 +94,7 @@ X_test  = test.iloc[:, :-1]
 y_test  = test.iloc[:, -1:]
 
 # Ucenje na trening skupu
-model = learn(X_train, y_train, lam=0.0001)
+model = learn(X_train, y_train, lam=0.0001, auto_alpha=True)
 
 # Predikcija na testu
 pred = predict(model, X_test)
