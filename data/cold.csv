@@ -1,0 +1,20 @@
+Temperature,Pressure,Cough,Sore throat,Cold
+high,normal,yes,yes,yes
+high,normal,no,yes,yes
+normal,normal,yes,no,no
+normal,normal,no,yes,no
+normal,elevated,no,no,no
+high,elevated,yes,yes,yes
+high,normal,yes,yes,yes
+high,normal,yes,no,no
+normal,elevated,no,yes,no
+normal,elevated,no,no,no
+high,normal,yes,yes,yes
+normal,elevated,yes,yes,yes
+normal,normal,no,no,no
+normal,elevated,no,yes,no
+high,normal,no,no,no
+high,elevated,no,yes,yes
+normal,elevated,yes,yes,yes
+normal,normal,yes,no,no
+normal,elevated,yes,no,no

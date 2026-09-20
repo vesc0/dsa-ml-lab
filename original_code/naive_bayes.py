@@ -1,6 +1,6 @@
 import pandas as pd
 
-#%% UCENJE
+#%% LEARNING
 def learn(data, class_attr):
     model = {}
     
@@ -15,7 +15,7 @@ def learn(data, class_attr):
     
     return model
 
-#%% PREDIKCIJA
+#%% PREDICTION
 def predict(model, new_instance):
     class_probabilities = {}
     
@@ -33,16 +33,16 @@ def predict(model, new_instance):
     
     return prediction, class_probabilities
 
-#%% KORISCENJE
-data = pd.read_csv('data/prehlada.csv')
-model = learn(data, 'Prehlada')
+#%% USAGE
+data = pd.read_csv('data/cold.csv')
+model = learn(data, 'Cold')
 
-data_new = pd.read_csv('data/prehlada_novi.csv')
+data_new = pd.read_csv('data/cold_new.csv')
 for i in range(len(data_new)):
     prediciton, confidence = predict(model, data_new.iloc[i])
     
     data_new.loc[i, 'prediction'] = prediciton
-    for klasa in confidence:
-        data_new.loc[i, 'class='+klasa] = confidence[klasa]
+    for class_value in confidence:
+        data_new.loc[i, 'class='+class_value] = confidence[class_value]
 
 print(data_new)

@@ -19,21 +19,21 @@ y = y.to_numpy()
 w = np.random.random((1,n))
 alpha = 0.6
 
-#%% ALGORITAM ZA UCENJE: Gradient Descent
+#%% LEARNING ALGORITHM: Gradient Descent
 for it in range(10000):
-	pred = X.dot(w.T)
-	err = pred - y
-	grad = err.T.dot(X) / m
-	w = w - alpha*grad
-	
-	MSE = err.T.dot(err) / m
-	grad_norm = abs(grad).sum()
-	print(it, grad_norm, MSE)
-	if grad_norm < 0.01: break
+    pred = X.dot(w.T)
+    err = pred - y
+    grad = err.T.dot(X) / m
+    w = w - alpha*grad
+
+    MSE = err.T.dot(err) / m
+    grad_norm = abs(grad).sum()
+    print(it, grad_norm, MSE)
+    if grad_norm < 0.01: break
 
 # model = w
 
-#%% PREDVIDJANJE
+#%% PREDICTION
 data_new = pd.read_csv('data/house_new.csv')
 data_new = (data_new - X_mean) / X_std
 data_new['X0'] = 1

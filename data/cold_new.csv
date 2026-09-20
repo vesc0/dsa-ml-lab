@@ -1,0 +1,6 @@
+Temperature,Pressure,Cough,Sore throat
+high,normal,yes,yes
+high,normal,no,yes
+normal,normal,yes,no
+normal,normal,no,yes
+normal,elevated,no,no

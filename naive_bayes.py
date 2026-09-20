@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from scipy.stats import norm
 
-#%% UCENJE
+#%% LEARNING
 def learn(data, class_attr, smoothing=1):
     model = {}
     model['_types'] = {}
@@ -24,7 +24,7 @@ def learn(data, class_attr, smoothing=1):
     
     return model
 
-#%% PREDIKCIJA
+#%% PREDICTION
 def predict(model, new_instance):
     class_probabilities = {}
     
@@ -44,7 +44,7 @@ def predict(model, new_instance):
                     var = max(var, epsilon)
                     p = norm.pdf(new_instance[attribute], loc=mean, scale=np.sqrt(var))
                 else:
-                    # kategoricki
+                    # categorical
                     p = model[attribute][class_value][new_instance[attribute]]
                 
             log_probability += np.log(p) if p > 0 else np.log(epsilon)
@@ -55,23 +55,23 @@ def predict(model, new_instance):
     
     return prediction, class_probabilities
 
-#%% KORISCENJE
+#%% USAGE
 data = pd.read_csv('data/drug.csv')
 class_attr = data.columns[-1]
 
-# Podela skupa na trening i test
+# Split the dataset into train and test
 data = data.sample(frac=1, random_state=42).reset_index(drop=True)
 split = int(len(data) * 0.8)
 train, test = data[:split], data[split:].reset_index(drop=True)
 
-# Ucenje na trening skupu
+# Learning on the training set
 model = learn(train, class_attr, smoothing=0)
 
-# Predikcija na testu
+# Prediction on the test set
 data_new = test
 for i in range(len(data_new)):
     prediciton, confidence = predict(model, data_new.iloc[i])
     
     data_new.loc[i, 'prediction'] = prediciton
-    for klasa in confidence:
-        data_new.loc[i, 'class='+klasa] = confidence[klasa]
+    for class_value in confidence:
+        data_new.loc[i, 'class='+class_value] = confidence[class_value]

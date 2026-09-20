@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-#%% UCENJE
+#%% LEARNING
 def learn(X, y, lam=0, stochastic=False, auto_alpha=False, alpha=None):
     model = {}
     X = X.copy()
@@ -26,12 +26,12 @@ def learn(X, y, lam=0, stochastic=False, auto_alpha=False, alpha=None):
     w_prev = w.copy()
     alpha0 = alpha
     
-    # ALGORITAM ZA UCENJE: Gradient Descent
+    # LEARNING ALGORITHM: Gradient Descent
     for it in range(10000):
         if stochastic:
             j = np.random.randint(m)
-            Xb = X[j:j+1]      # oblik (1, n)
-            yb = y[j:j+1]      # oblik (1, 1)
+            Xb = X[j:j+1] # shape (1, n)
+            yb = y[j:j+1] # shape (1, 1)
         else:
             Xb = X
             yb = y
@@ -47,8 +47,8 @@ def learn(X, y, lam=0, stochastic=False, auto_alpha=False, alpha=None):
         if auto_alpha and not stochastic:
             c = cost.item()
             if c > prev_cost:
-                w = w_prev # ponisti prosli korak
-                prev_cost = np.inf # sledeci korak neka prodje
+                w = w_prev # undo the previous step
+                prev_cost = np.inf # let the next step through
                 alpha *= 0.5
                 continue
             else:
@@ -71,7 +71,7 @@ def learn(X, y, lam=0, stochastic=False, auto_alpha=False, alpha=None):
     
     return model
 
-#%% PREDVIDJANJE
+#%% PREDICTION
 def predict(model, X):
     X = X.copy()
     X = (X - model['mean']) / model['std']
@@ -79,10 +79,10 @@ def predict(model, X):
     
     return X.to_numpy().dot(model['w'].T)
     
-#%% KORISCENJE
+#%% USAGE
 data = pd.read_csv('data/boston.csv')
 
-# Podela skupa na trening i test
+# Split the dataset into train and test
 data = data.sample(frac=1, random_state=42)
 split = int(0.8 * len(data))
 train = data[:split]
@@ -93,10 +93,10 @@ y_train = train.iloc[:, -1:]
 X_test  = test.iloc[:, :-1]
 y_test  = test.iloc[:, -1:]
 
-# Ucenje na trening skupu
+# Learning on the training set
 model = learn(X_train, y_train, lam=0.0001, auto_alpha=True)
 
-# Predikcija na testu
+# Prediction on the test set
 pred = predict(model, X_test)
 print(pred[:10])
 print(y_test.to_numpy()[:10])
